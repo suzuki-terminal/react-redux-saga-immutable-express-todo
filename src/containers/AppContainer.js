@@ -3,23 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { Todos, fetchTodos, addTodosItem, updateTodosItem, deleteTodosItem } from '../redux-modules/todos';
+import {
+  Todos,
+  fetchTodos,
+  setTodosInputTitle,
+  addTodosItem,
+  updateTodosItem,
+  deleteTodosItem,
+} from '../redux-modules/todos';
 
 const propTypes = {
   todos: PropTypes.instanceOf(Todos).isRequired,
   fetchTodos: PropTypes.func,
+  setTodosInputTitle: PropTypes.func,
   addTodosItem: PropTypes.func,
   updateTodosItem: PropTypes.func,
   deleteTodosItem: PropTypes.func,
 };
 
 class AppContainer extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.state = { title: '' };
-  }
 
   componentDidMount() {
     this.props.fetchTodos();
@@ -35,15 +37,14 @@ class AppContainer extends Component {
           className="form-inline"
           onSubmit={(e) => {
             e.preventDefault();
-            this.props.addTodosItem({ title: this.state.title });
-            this.setState({ title: '' });
+            this.props.addTodosItem();
           }}
         >
           <input
             className="form-control form-control-lg"
             type="text"
-            value={this.state.title}
-            onChange={({ target: { value } }) => this.setState({ title: value })}
+            value={this.props.todos.inputTitle}
+            onChange={({ target: { value } }) => this.props.setTodosInputTitle(value)}
           />
 
           <button className="btn btn-primary">追加</button>
@@ -107,6 +108,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
     fetchTodos,
+    setTodosInputTitle,
     addTodosItem,
     updateTodosItem,
     deleteTodosItem,

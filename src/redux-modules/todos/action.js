@@ -8,6 +8,9 @@ export const update = createAction(UPDATE);
 export const FETCH_TODOS = shortid.generate();
 export const fetchTodos = createAction(FETCH_TODOS);
 
+export const SET_TODOS_INPUT_TITLE = shortid.generate();
+export const setTodosInputTitle = createAction(SET_TODOS_INPUT_TITLE);
+
 export const ADD_TODOS_ITEM = shortid.generate();
 export const addTodosItem = createAction(ADD_TODOS_ITEM);
 

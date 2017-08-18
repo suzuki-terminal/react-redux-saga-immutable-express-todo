@@ -1,5 +1,6 @@
 import {
   fetchTodos,
+  setTodosInputTitle,
   addTodosItem,
   updateTodosItem,
   deleteTodosItem,
@@ -15,6 +16,7 @@ import saga from './saga';
 
 export {
   fetchTodos,
+  setTodosInputTitle,
   addTodosItem,
   updateTodosItem,
   deleteTodosItem,

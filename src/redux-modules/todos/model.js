@@ -10,6 +10,7 @@ export class Todo extends Record({
 }
 
 export class Todos extends Record({
+  inputTitle: '',
   fetch: false,
   items: new List(),
 }) {
@@ -24,18 +25,26 @@ export class Todos extends Record({
       .set('items', new List(items.map(i => new Todo(i))));
   }
 
-  addTodosItem({ item }) {
+  setInputTitle({ inputTitle }) {
+    return this.set('inputTitle', inputTitle);
+  }
+
+  clearInputTitle() {
+    return this.set('inputTitle', '');
+  }
+
+  addItem({ item }) {
     return this.set('items', this.items.push(new Todo(item)));
   }
 
-  updateTodosItem({ item }) {
+  updateItem({ item }) {
     return this.set('items', this.items.update(
       this.items.findIndex(i => i.id === item.id),
       i => i.merge(item),
     ));
   }
 
-  deleteTodosItem({ item }) {
+  deleteItem({ item }) {
     return this.set('items', this.items.delete(this.items.findIndex(i => i.id === item.id)));
   }
 
