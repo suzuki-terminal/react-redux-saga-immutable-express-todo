@@ -3,13 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import {
-  fetchTodos,
-  addTodosItem,
-  updateTodosItem,
-  deleteTodosItem,
-  Todos,
-} from '../redux-modules/todos';
+import { Todos, fetchTodos, addTodosItem, updateTodosItem, deleteTodosItem } from '../redux-modules/todos';
 
 const propTypes = {
   todos: PropTypes.instanceOf(Todos).isRequired,
