@@ -1,4 +1,5 @@
 import {
+  setFilterCompleted,
   fetchTodos,
   setTodosInputTitle,
   addTodosItem,
@@ -15,6 +16,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 export {
+  setFilterCompleted,
   fetchTodos,
   setTodosInputTitle,
   addTodosItem,

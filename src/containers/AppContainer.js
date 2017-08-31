@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import {
   Todos,
+  setFilterCompleted,
   fetchTodos,
   setTodosInputTitle,
   addTodosItem,
@@ -14,6 +15,7 @@ import {
 
 const propTypes = {
   todos: PropTypes.instanceOf(Todos).isRequired,
+  setFilterCompleted: PropTypes.func,
   fetchTodos: PropTypes.func,
   setTodosInputTitle: PropTypes.func,
   addTodosItem: PropTypes.func,
@@ -52,6 +54,15 @@ class AppContainer extends Component {
 
         <br />
 
+        <div className="btn-group">
+          <button className="btn btn-link" onClick={() => this.props.setFilterCompleted({ completed: null })}>すべて</button>
+          <button className="btn btn-link" onClick={() => this.props.setFilterCompleted({ completed: true })}>完了</button>
+          <button className="btn btn-link" onClick={() => this.props.setFilterCompleted({ completed: false })}>未完了</button>
+        </div>
+
+        <br />
+        <br />
+
         {this.props.todos.fetch
           ? (
             <p>Loading...</p>
@@ -68,7 +79,7 @@ class AppContainer extends Component {
               </thead>
 
               <tbody>
-                {this.props.todos.items.map(todo =>
+                {this.props.todos.filteredTodoItems.map(todo =>
                   <tr key={todo.id}>
                     <td>{todo.title}</td>
                     <td>{todo.completed ? '完了' : '未完了'}</td>
@@ -107,6 +118,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
+    setFilterCompleted,
     fetchTodos,
     setTodosInputTitle,
     addTodosItem,

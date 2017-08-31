@@ -3,12 +3,27 @@ import axios from 'axios';
 
 import {
   update,
+  SET_FILTER_COMPLETED,
   FETCH_TODOS,
   SET_TODOS_INPUT_TITLE,
   ADD_TODOS_ITEM,
   UPDATE_TODOS_ITEM,
   DELETE_TODOS_ITEM,
 } from './action';
+
+/**
+ * フィルターをセット
+ */
+function* handleSetFilterCompleted() {
+  while (true) {
+    const { payload: { completed } } = yield take(SET_FILTER_COMPLETED);
+
+    let todos = yield select(state => state.todos);
+    todos = todos.setFilter({ completed });
+
+    yield put(update(todos));
+  }
+}
 
 /**
  * リスト取得
@@ -77,15 +92,21 @@ function* handleDeleteTodosItem() {
   while (true) {
     const { payload: { todo } } = yield take(DELETE_TODOS_ITEM);
 
-    yield call(axios.delete, `/api/todos/${todo.id}`);
+    if (window.confirm(`${todo.title} を削除します。よろしいですか？`)) {
+      yield call(axios.delete, `/api/todos/${todo.id}`);
 
-    const todos = yield select(state => state.todos);
-    yield put(update(todos.deleteItem({ item: todo })));
+      const todos = yield select(state => state.todos);
+
+      alert(`${todo.title} を削除しました。`);
+
+      yield put(update(todos.deleteItem({ item: todo })));
+    }
   }
 }
 
 
 export default function* rootSaga() {
+  yield fork(handleSetFilterCompleted);
   yield fork(handleFetchTodos);
   yield fork(handleSetTodosInputTitle);
   yield fork(handleAddTodosItem);

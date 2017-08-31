@@ -4,6 +4,8 @@ import shortid from 'shortid';
 export const UPDATE = shortid.generate();
 export const update = createAction(UPDATE);
 
+export const SET_FILTER_COMPLETED = shortid.generate();
+export const setFilterCompleted = createAction(SET_FILTER_COMPLETED);
 
 export const FETCH_TODOS = shortid.generate();
 export const fetchTodos = createAction(FETCH_TODOS);

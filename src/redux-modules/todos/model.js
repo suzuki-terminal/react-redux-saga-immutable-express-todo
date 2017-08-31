@@ -1,5 +1,11 @@
 import { Record, List } from 'immutable';
 
+export class Filter extends Record({
+  completed: null,
+}) {
+
+}
+
 export class Todo extends Record({
   id: null,
   title: null,
@@ -12,8 +18,21 @@ export class Todo extends Record({
 export class Todos extends Record({
   inputTitle: '',
   fetch: false,
+  filter: new Filter(),
   items: new List(),
 }) {
+
+  get filteredTodoItems() {
+    if (this.filter.completed === null) {
+      return this.items;
+    }
+
+    return this.items.filter(i => i.completed === this.filter.completed);
+  }
+
+  setFilter({ completed }) {
+    return this.setIn(['filter', 'completed'], completed);
+  }
 
   fetching() {
     return this.set('fetch', true);
